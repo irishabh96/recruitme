@@ -1,0 +1,207 @@
+<%- contentFor('content') %>
+
+<% include recruiter-nav %>
+
+<div class="row"><br>
+    <div class="col-md-3">
+        <% include ../select-job %>
+    </div>
+
+    <% if(typeof selectedJob == 'undefined'){ %>
+        <!-- <h3> Please select a job </h3> -->
+    <% } else { %><br>
+        <% if(typeof profileData !== 'undefined' && profileData.length > 0 ){ %>
+                <div class="col-md-9">
+                   <% profileData.forEach(function(item, index){ %>
+
+                   <% if(selectedJob.candidateId && selectedJob.candidateId.length > 0){ %>
+                       <% if(_.contains(selectedJob.candidateId.toObject(), item._id.toString())){ %>
+
+                        <div class="row">
+                            <div class="col-md-2 img-portfolio" style="margin-bottom:0px">
+                                <a href="">
+                                <% if(item.profile.picture){ %>
+                                    <img class="img-responsive img-hover" src="/<%- item.profile.picture %>" alt="">
+                                <% } else { %>
+                                    <img class="img-responsive img-hover" src="/img/default-profile-picture.jpg" alt="">
+                                <%   } %>
+                                </a>
+                            </div>
+
+                            <div class="col-md-10" style="margin-bottom:0px;">
+                                <div style="width:50%;float:left">
+                                    <strong><%- item.profile.name %></strong>
+                                    <% if(item.experience.length > 0){ %>
+                                        <% var sortedDataExp = helpers.sortTime(item.experience); %><br>
+                                        <%- sortedDataExp[0].title %><br>
+                                        <%- sortedDataExp[0].companyName %><br>
+                                        <a id="displayText" class="<%-item._id%>" onclick="f1('<%-item._id%>')">Show more</a><br>
+                                        <% } %>
+                                </div>
+                                <div style="width:50%; float:right" align="right">
+                                    <a class="btn btn-success" href="/profile/remove/saved-candidate/<%-selectedJob.id %>/<%-item._id%>" style=" color: white; width:120px;">
+                                    Unsave Profile
+                                    </a>
+                                    <br><br>
+                                    <button type="button" class="btn btn-primary" style="width:120px" data-toggle="modal"
+                                    data-target="#exampleModal" data-username="<%- item.profile.name%>" data-userid="<%- item.id %>" data-jobid="<%- selectedJob.id %>">
+                                    Message
+                                    </button>
+
+
+
+
+                            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+                              <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <h4 class="modal-title" id="exampleModalLabel" align="left">New message</h4>
+                                  </div>
+                                  <div class="modal-body">
+                                    <form>
+                                      <input type="hidden" class="form-control" id="jobId">
+                                      <input type="hidden" class="form-control" id="userId">
+                                      <div class="form-group" align="left">
+                                        <label for="recipient-name" class="control-label">Recipient:</label>
+                                        <input class="form-control" disabled id="recipient-name" />
+                                    </div>
+                                      <div class="form-group" align="left">
+                                        <label for="message-text" class="control-label">Message:</label>
+                                        <textarea class="form-control" id="message-text" style="height:250px"></textarea>
+                                      </div>
+                                    </form>
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-primary sendButton">Send message</button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                         </div>
+                                </div>
+
+                    <!-- Additional Profile Info -->
+
+                    <div style="display:none;"  id="<%-item._id%>">
+                        <% if(item.experience.length > 0){ %>
+                                <div class="col-md-12" style="margin-top:30px; margin-bottom:0px">
+                                    <strong >EXPERIENCE</strong><hr style="margin-top:0px ; margin-bottom:0px; margin-right:0px">
+                                </div>
+                                <% for(i=0; i < sortedDataExp.length; i++){ %>
+                                    <div class="col-md-12" style="margin-top:20px; margin-bottom:0px;">
+                                        <strong><%- sortedDataExp[i].companyName %> (<%- sortedDataExp[i].time.startMonth %>  <%- sortedDataExp[i].time.startYear %> -
+                                        <% if(!sortedDataExp[i].isCurrent){ %>
+                                            <%- sortedDataExp[i].time.endMonth %> <%-sortedDataExp[i].time.endYear %>)
+                                        <% }else{ %>
+                                            Current)
+                                        <% } %></strong>
+                                        <div><%- sortedDataExp[i].title %></div>
+                                        <% if (sortedDataExp[i].valuePoints){ %>
+                                        <ul style="margin-bottom:0px">
+                                            <% sortedDataExp[i].valuePoints.forEach(function(item,index){ %>
+                                                <li><%- item %></li>
+                                            <% }); %>
+                                        </ul>
+                                        <% } %>
+
+                                    </div>
+                                <% } %>
+                            <% } %>
+                        <!-- sorted Data exp -->
+
+                            <% if(item.education.length > 0){ %>
+                                <% var sortedDataEdu = helpers.sortTime(item.education); %>
+                                    <div class="col-md-12" style="margin-top:30px; margin-bottom:0px">
+                                        <strong >EDUCATION</strong><hr style="margin-top:0px ; margin-bottom:0px; margin-right:0px">
+                                    </div>
+                                <% for(i=0; i < sortedDataEdu.length; i++){ %>
+                                        <div class="col-md-12" style="margin-top:20px;margin-bottom:0px;">
+                                            <strong><%- sortedDataEdu[i].schoolName %> (<%-sortedDataEdu[i].time.startMonth %> <%- sortedDataEdu[i].time.endYear %> -
+                                            <% if(!sortedDataEdu[i].isCurrent){ %>
+                                                <%-sortedDataEdu[i].time.endMonth %> <%- sortedDataEdu[i].time.endYear %>)
+                                            <% } else { %>
+                                            Current ) <% } %> </strong>
+                                            <div><%- sortedDataEdu[i].degree %></div>
+                                            <% if (sortedDataEdu[i].valuePoints){ %>
+                                            <ul style="margin-bottom:0px">
+                                                <% sortedDataEdu[i].valuePoints.forEach(function(item, index){ %>
+                                                <li><%- item %></li>
+                                                <%  }) %>
+                                            </ul>
+                                            <% } %>
+                                        </div>
+                                <% } %>
+                            <% } %>
+                    </div>
+
+
+                </div>
+                <hr style="margin-bottom: 20px; margin-top:20px" />
+                <% } %>
+            <% } %>
+
+            <% }) %>
+
+
+        <% }   %>
+        </div>
+
+        </div>
+
+
+
+        <script>
+
+              $(document).ready(function() {
+                    $('#exampleModal').on('show.bs.modal', function (event) {
+                        var button = $(event.relatedTarget);
+                        var jobId = button.data('jobid');
+                        var userId = button.data('userid');
+                        var userName = button.data('username');
+                        var modal = $(this);
+                        modal.find('.modal-title').text('New message to ' + userName);
+                        modal.find('.modal-body #recipient-name').val(userName);
+                        modal.find('.modal-body #jobId').val(jobId);
+                        modal.find('.modal-body #userId').val(userId);
+
+                    });
+
+                    $('.sendButton').on('click', function(){
+                        var message = $("#message-text").val();
+                        var jobId = $("#jobId").val();
+                        var userId = $("#userId").val();
+                        sendMessage(jobId, userId, message);
+                    });
+
+                });
+
+                function sendMessage(jobId,userId,message){
+                    $("#message-text").val("")
+                    var settings = {
+                              "async": true,
+                              "crossDomain": true,
+                              "url": "<% config.url %>/profile/messages/new/"+jobId+"/"+userId,
+                              "method": "POST",
+                              "headers": {
+                                "content-type": "application/x-www-form-urlencoded",
+                                "cache-control": "no-cache",
+                              },
+                              "data": {
+                                "composedMessage": message,
+                                "_csrf": "<%- _csrf %>"
+                              }
+                        }
+
+                    $.ajax(settings).done(function (response) {
+                      //console.log(response);
+                      $('#exampleModal').modal('hide');
+                    });
+                }
+
+        </script>
+
+    <% } %>
+
+</div>

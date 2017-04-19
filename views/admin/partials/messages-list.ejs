@@ -1,0 +1,25 @@
+<% data.forEach(function(v){ %>
+
+    <% if(userId.toString() != v.author._id.toString()){ %>
+       <li class="left clearfix">
+             <span class="chat-img1 pull-left">
+             <img src="/img/default-profile-picture.jpg" alt="User Avatar" class="img-circle">
+             </span>
+             <div class="chat-body1 clearfix">
+                <p><%- v.body %></p>
+          <div class="chat_time pull-right chat-time-stamp"><%= helpers.agoTime(v.createdAt) %></div>
+             </div>
+       </li>
+    <% } else { %>
+      <li class="left clearfix admin_chat">
+             <span class="chat-img1 pull-right">
+             <img src="/img/default-profile-picture.jpg" alt="User Avatar" class="img-circle">
+             </span>
+             <div class="chat-body1 clearfix">
+                <p style="text-align: right;"><%- v.body %></p>
+          <div class="chat_time pull-left chat-time-stamp"><%- helpers.agoTime(v.createdAt) %></div>
+             </div>
+      </li>
+    <% } %>
+
+<% }) %>

@@ -1,0 +1,339 @@
+<!-- Edit Experience -->
+<script type="text/html" id="profileEditExperience">
+<form id="formID" class="col-md-12 col-sm-12" style="padding-left: 0px; padding-right:0px;" action="/profile/experience/edit/{{= data._id}}" method="post">
+    <div class="col-md-12 col-sm-12" style="padding-left: 0px; padding-right:0px;">
+        <input type="hidden" name="_csrf" value="<%- _csrf %>">
+        <input type="text" style="width:85% ; margin:0px 0px 0px 0px; border:white ; -webkit-appearance:none"
+        placeholder="Enter Company Name" id="name"
+        name="companyName" value="{{= data.companyName }}"></input><br>
+        <l>(</l>
+        <select id="startMonth" style="width:auto ; margin:0px 0px 0px 0px; border:white ; -webkit-appearance:none"  name="startMonth">
+            <option value="">Start Month</option>
+            {{ config.monthsList.forEach(function(item,index){ }}
+                <option {{ if(data.time.startMonth == item){ }} selected="selected" {{ } }} value="{{= item}}">
+                    {{= item }}
+                </option>
+            {{ }) }}
+        </select>
+        <select id="startYear"  style="width:auto ; margin:0px 0px 0px 0px; border:white ; -webkit-appearance:none"  name="startYear">
+            <option value="">Start Year</option>
+            {{ for(i=config.years.upto; i>=config.years.from; i--){ }}
+                <option{{ if(data.time.startYear == i){ }} selected="selected" {{ } }} value="{{= i }}">
+                    {{= i }}
+                </option>
+            {{ } }}
+        </select>
+        &nbsp; - &nbsp;
+        <select class="expCheckSelected" id="endMonth" style="width:auto ; margin:0px 0px 0px 0px; border:white ; -webkit-appearance:none"  name="endMonth">
+            <option value="">End Month</option>
+            {{ config.monthsList.forEach(function(item,index){ }}
+                <option {{ if(data.time.endMonth == item){ }} selected="selected" {{ } }} value="{{= item}}">
+                    {{= item }}
+                </option>
+            {{ }) }}
+        </select>
+        <select id="endYear" style="width:auto ; margin:0px 0px 0px 0px; border:white ; -webkit-appearance:none"  name="endYear">
+            <option value="">End Year</option>
+            {{ for(i=config.years.upto; i>=config.years.from; i--){ }}
+                <option{{ if(data.time.endYear == i){ }} selected="selected" {{ } }} value="{{= i }}">
+                    {{= i }}
+                </option>
+            {{ } }}
+        </select>
+        <l>)</l>
+        <div class="checkbox-current">
+            <input type="checkbox" id="checkboxExp1" name="isCurrent" value="current" {{ if(data.isCurrent == true){ }} checked="checked" {{ } }}/>
+            <label for="checkbox">Currently working?</label>
+        </div>
+        <input style="width:100%;" type="text" class="form-input-common" placeholder="Enter Position Title" name="title" id="title" value="{{=data.title}}" ></input>
+        <ul name="valuePoints[]"  class="showlist" >
+        {{ for(i=0; i<10; i++){ }}
+            <li>
+                <input type="text" name="valuePoints" {{ if(data.valuePoints[i]){ }}
+                value="{{= data.valuePoints[i] }}" {{  } }} class="editValuePoints form-input-common" placeholder="Bullet point {{= i }}">
+            </li>
+        {{ } }}
+        </ul>
+    </div>
+    <button id="addbutton" class="btn btn-link" style="display: inline;padding: 0;"><i class="fa fa-floppy-o"></i> save </button>&nbsp; &nbsp; &nbsp;
+     <a style="display:inline;" id="cancelEdit" href="/profile" ><i class="fa fa-times-circle"></i> cancel </a>&nbsp; &nbsp; &nbsp;
+     <a style="display:inline" id="deleteExp" href="/profile/experience/delete/{{= data._id}}" ><i class="fa fa-trash-o"></i> delete</a>
+</form>
+<div class="clearfix"></div>
+</script>
+
+<!-- Edit Education -->
+<script type="text/html" id="profileEditEducation">
+<form id="formID" class="col-md-12 col-sm-12" style="padding-left: 0px; padding-right:0px;" action="/profile/education/edit/{{= dataEdu._id}}" method="post">
+     <div class="col-md-12 col-sm-12" style="padding-left: 0px; padding-right:0px;">
+    <input type="hidden" name="_csrf" value="<%- _csrf %>">
+    <input type="text" style="width:85% ; margin:0px 0px 0px 0px; border:white; -webkit-appearance:none" placeholder="Enter Company Name" id="name" name="name" value="{{= dataEdu.schoolName}}"></input><br>
+    <l>(</l>
+    <select id="start" style="width:auto ; margin:0px 0px 0px 0px; border:white ; -webkit-appearance:none"  name="startMonth">
+        <option value="">Start Month</option>
+           {{ config.monthsList.forEach(function(item,index){ }}
+                <option {{ if(dataEdu.time.startMonth == item){ }} selected="selected" {{ } }} value="{{= item}}">
+                    {{= item }}
+                </option>
+            {{ }) }}
+    </select>
+    <select class="" id="start" style="width:auto ; margin:0px 0px 0px 0px; border:white ; -webkit-appearance:none"  name="startYear">
+        <option value="">Start Year</option>
+        {{ for(i=config.years.upto; i>=config.years.from; i--){ }}
+                <option{{ if(dataEdu.time.startYear == i){ }} selected="selected" {{ } }} value="{{= i }}">
+                    {{= i }}
+                </option>
+            {{ } }}
+    </select>
+    &nbsp; - &nbsp;
+    <select class="" id="endMonth" style="width:auto ; margin:0px 0px 0px 0px; border:white ; -webkit-appearance:none"  name="endMonth">
+        <option value="">End Month</option>
+        {{ config.monthsList.forEach(function(item,index){ }}
+                <option {{ if(dataEdu.time.endMonth == item){ }} selected="selected" {{ } }} value="{{= item}}">
+                    {{= item }}
+                </option>
+            {{ }) }}
+    </select>
+    <select  id="editchoolEndYear" style="width:auto ; margin:0px 0px 0px 0px; border:white ; -webkit-appearance:none"  name="endYear">
+    <option value="">End Year</option>
+    {{ for(i=config.years.upto; i>=config.years.from; i--){ }}
+                <option{{ if(dataEdu.time.endYear == i){ }} selected="selected" {{ } }} value="{{= i }}">
+                    {{= i }}
+                </option>
+            {{ } }}
+    </select>
+    <l>)</l>
+    <div class="checkbox-current">
+        <input type="checkbox" id="checkboxExp4" name="isCurrent" {{ if(dataEdu.isCurrent == true){ }} checked="checked" {{ } }}/>
+        <label for="checkbox">Currently studying?</label>
+    </div>
+    <input style="width:100%" type="text" class="form-input-common" placeholder="Enter Degree Title" name="degree" id="degree" value="{{= dataEdu.degree}}" ></input>
+    <ul name="valuePoints[]"  class="showlist" >
+    {{ for(i=0; i<10; i++){ }}
+            <li>
+                <input type="text" {{ if(dataEdu.valuePoints[i]){ }} value="{{= dataEdu.valuePoints[i] }}" {{  } }}
+                name="valuePoints" class="editvaluePoints form-input-common" placeholder="Bullet point {{= i }}">
+            </li>
+        {{ } }}
+    </ul>
+    </div>
+    <button id="addbutn" class="btn btn-link" style="display: inline;padding: 0; "><i class="fa fa-floppy-o"></i> save </button> &nbsp; &nbsp; &nbsp;
+    <a style="display:inline" id="cancelEdit" href="/profile" ><i class="fa fa-times-circle"></i> cancel  </a>&nbsp; &nbsp; &nbsp;
+    <a id="deleteExp" href="/profile/education/delete/{{= dataEdu._id}}" ><i class="fa fa-trash-o"></i> delete</a>
+</form>
+<div class="clearfix"></div>
+</script>
+
+<!-- Sidebar -->
+<div class="row">
+    <div class="col-md-4" style="padding-top:20px;">
+        <% include sidebar %>
+    </div>
+</div>
+
+<!-- Main Area Content -->
+    <div class="col-md-8" style="padding-top:20px;">
+        <div class="row" style="margin-bottom:0px">
+            <div class="col-md-3 img-portfolio" style="margin-bottom:0px">
+                <% if(data.profile.picture) { %>
+                    <img class="img-responsive img-hover" src="<%- data.profile.picture %>" alt="">
+               <% }else{ %>
+                   <img class="img-responsive img-hover" src="/img/default-profile-picture.jpg" alt="">
+                <% } %>
+                <form action='/profile/api/upload' id="profilePicUploadForm" method='post' encType="multipart/form-data">
+                    <input type="hidden" name="_csrf" value="<%- _csrf %>">
+                    <input type="file" class="file-upload" name="profileImage" />
+                    <input type='submit' class="add-photo-btn" value='upload' />
+                </form>
+            </div>
+            <div class="col-md-6" style="margin-bottom:0px">
+                <strong><%- data.profile.name %></strong><br>
+                <% if(data.experience.length > 0) { %>
+                <% var sortedDataExp = helpers.sortTime(data.experience); %>
+                 <%- sortedDataExp[0].title %> <br>
+                   <p> <%- sortedDataExp[0].companyName %></p>
+                <% } %><br>
+            </div>
+        </div>
+
+<!-- Experience Section -->
+        <div class="row">
+            <div class="col-md-12" style="margin-top:40px">
+                <div style="width:50%;float:left"><strong>EXPERIENCE</strong></div>
+                <div align="right" style="width:50%;float:right" >
+                    <a style="display:inline; color:grey;" id="showExpForm" ><i style="color:grey;" class="fa fa-plus"></i> add</a>
+                </div>
+                <hr style="width:100% ; margin-top:0px;margin-bottom:0px;">
+            </div>
+        </div>
+        <div class="row" style="margin-bottom:0px;">
+            <div id="toggleText1a" style="display: block;" class="col-md-12">
+                <% if(data.experience.length > 0){ %>
+
+                    <% for(var i=0; i < sortedDataExp.length; i++){ %>
+                        <div style="margin-top:20px; margin-bottom:0px;">
+                            <strong name="experienceTitle"><%- sortedDataExp[i].companyName %> (<%- sortedDataExp[i].time.startMonth %> <%- sortedDataExp[i].time.startYear %> -
+                                <% if(!sortedDataExp[i].isCurrent){ %>
+                                    <%- sortedDataExp[i].time.endMonth %> <%-sortedDataExp[i].time.endYear %>)
+                                <% }else{ %>
+                                    Current)
+                                <% } %>
+                            </strong> &nbsp;
+                            <a id="displayText1" class="dataId" style="color:grey" name="<%-sortedDataExp[i]._id %>"><i style="color:grey;" class="fa fa-pencil"></i> edit</a>
+                            <p style="margin-bottom:0px;" name="title"><%- sortedDataExp[i].title %></p>
+                            <% if(sortedDataExp[i].valuePoints.length > 0 ){ %>
+                                <ul style="margin-bottom:0px">
+                                    <% sortedDataExp[i].valuePoints.forEach(function(item,index){ %>
+                                        <li><%- item %></li>
+                                    <% }); %>
+                                </ul>
+                            <% } %>
+                        </div>
+                    <% } %>
+                <% } else{ %>
+                    <div class="experience-place">
+                        <button id="addexperience" class="btn btn-info"><strong>Click here to add your experience</strong></button>
+                    </div><br><br>
+                    <% } %>
+            </div>
+            <!-- Default hidden --> <!-- hitpoint -->
+            <div id="toggleText1b" style="display: none;" class="col-md-12">
+                <form id="formID" action="/profile/experience/add" method="post">
+                    <input type="hidden" name="_csrf" value="<%- _csrf %>">
+                    <input type="text" style="width:100% ; margin:0px 0px 0px 0px; border:white ; -webkit-appearance:none" placeholder="Enter Company Name" id="companyName" name="companyName">                    <br>
+                    <l>(</l>
+                    <select id="startMonth" style="width:auto ; margin:0px 0px 0px 0px; border:white ; -webkit-appearance:none"  name="startMonth">
+                        <option value="">Start Month</option>
+                        <% config.monthsList.forEach(function(item,index){ %>
+                            <option value="<%- item %>"><%- item %></option>
+                        <% }) %>
+                    </select>
+                    <select class="" id="startYear" style="width:auto ; margin:0px 0px 0px 0px; border:white ; -webkit-appearance:none"  name="startYear">
+                        <option value="">Start Year</option>
+                        <% for(i=config.years.upto; i>=config.years.from; i--){ %>
+                            <option value="<%- i %>"><%- i %></option>
+                        <% } %>
+                    </select>
+                    &nbsp; - &nbsp;
+                    <select class="" id="endMonth" style="width:auto ; margin:0px 0px 0px 0px; border:white ; -webkit-appearance:none"  name="endMonth">
+                        <option value="">End Month</option>
+                        <% config.monthsList.forEach(function(item,index){ %>
+                            <option value="<%- item %>"><%- item %></option>
+                        <% }); %>
+                    </select>
+                    <select id="endYear" style="width:auto ; margin:0px 0px 0px 0px; border:white ; -webkit-appearance:none"  name="endYear">
+                        <option value="">End Year</option>
+                        <% for(i=config.years.upto; i>=config.years.from; i--){ %>
+                            <option value="<%- i %>"><%- i %></option>
+                        <% } %>
+                    </select>
+                    <l>)</l>
+                    <div class="checkbox-current">
+                        <input type="checkbox" id="checkboxExp1" name="isCurrent" />
+                        <label for="checkbox">Currently working?</label>
+                    </div>
+                    <input type="text" style="width:100% ; margin:0px 0px 0px 0px; border:white ; -webkit-appearance:none" placeholder="Enter Position Title" name="posTitle" id="posTitle" ></input>
+                    <ul name="valuePoints[]"  class="showlist" >
+                        <% for(i=1; i<10; i++){ %>
+                            <li><input type="text" name="valuePoints" class="valuePoints form-input-common" placeholder="Bullet point <%- i %>"></input></li>
+                        <% } %>
+                    </ul>
+                   <button id="addbutt" class="btn btn-link" style="display:inline; padding:0;"><i class="fa fa-floppy-o"></i> save </button> &nbsp; &nbsp; &nbsp;
+                   <a id="hideExpForm" href="/profile" ><i class="fa fa-times-circle"></i> cancel</a> <br><br>
+                </form>
+            </div>
+        </div>
+
+<!-- Education -->
+        <div class="row">
+            <div class="col-md-12" style="margin-top:40px">
+                <div style="width:50%;float:left">
+                    <strong>EDUCATION</strong>
+                </div>
+                    <div align="right" style="width:50%;float:right">
+                        <a id="showEduForm" style="color:grey"><i style="color:grey;" class="fa fa-plus"></i> add</a>
+                    </div>
+                    <hr style="width:100% ;margin-top:0px; margin-bottom:0px">
+            </div>
+        </div>
+        <div class="row">
+            <div id="toggleText101a" style="display: block" class="col-md-12">
+                <% if(data.education.length > 0) {%>
+                    <% var sortedData = helpers.sortTime(data.education); %>
+                    <% for(var i=0; i < sortedData.length; i++) {%>
+                    <div style="margin-top:20px; margin-bottom:0px;">
+                        <strong><%- sortedData[i].schoolName %> (<%- sortedData[i].time.startMonth %> <%- sortedData[i].time.startYear %> -
+                            <% if(!sortedData[i].isCurrent){ %>
+                                <%- sortedData[i].time.endMonth %> <%- sortedData[i].time.endYear %>)
+                            <% }else{ %>
+                            Current)
+                            <% } %>
+                        </strong> &nbsp;
+                        <a style="display:inline; color:grey" class="dataId1" name="<%-sortedData[i]._id %>" ><i style="color:grey;" class="fa fa-pencil"></i> edit</a>
+                        <p style="margin-bottom:0px;"><%- sortedData[i].degree %></p>
+                        <% if(sortedData[i].valuePoints.length > 0){ %>
+                            <ul style="margin-bottom:0px">
+                                <% sortedData[i].valuePoints.forEach(function(item,index){ %>
+                                    <li><%- item %></li>
+                                <% }); %>
+                            </ul>
+                        <% } %>
+                        </div>
+                    <% } %>
+                <% } else{ %>
+                        <div class="education-place">
+                            <button id="addeducation" class="btn btn-info"><strong>Click here to add your education</strong></button>
+                        </div><br><br>
+                    <% } %>
+            </div>
+        </div>
+        <div class="row">
+            <div id="toggleText101b" style="display: none" class="col-md-12">
+                <form id="formID1" action="/profile/education/add" method="post">
+                    <input type="hidden" name="_csrf" value="<%- _csrf %>">
+                    <input type="text" style="width:100% ; margin:0px 0px 0px 0px; border:white ; -webkit-appearance:none" placeholder="Enter School Name" id="schoolName" name="schoolName"></input>
+                    <br><l>(</l>
+                    <select class="" id="startMonth" style="width:auto ; margin:0px 0px 0px 0px; border:white ; -webkit-appearance:none"  name="startMonth">
+                        <option value="">Start Month</option>
+                        <% config.monthsList.forEach(function(item,index){ %>
+                            <option value="<%- item %>"><%- item %></option>
+                        <% }); %>
+                    </select>
+                    <select class="" id="startYear" style="width:auto ; margin:0px 0px 0px 0px; border:white ; -webkit-appearance:none"  name="startYear">
+                        <option value="">Start Year</option>
+                        <% for(i=config.years.upto; i>=config.years.from; i--){ %>
+                            <option value="<%- i %>"><%- i %></option>
+                        <% } %>
+                    </select>
+                    &nbsp - &nbsp
+                    <select class="" id="endMonth" style="width:auto ; margin:0px 0px 0px 0px; border:white ; -webkit-appearance:none"  name="endMonth">
+                        <option value="">End Month</option>
+                        <% config.monthsList.forEach(function(item,index){ %>
+                            <option value="<%- item %>"><%- item %></option>
+                        <% }); %>
+                    </select>
+                    <select class="" id="endYear" style="width:auto ; margin:0px 0px 0px 0px; border:white ; -webkit-appearance:none"  name="endYear">
+                        <option value="">End Year</option>
+                        <% for(i=config.years.upto; i>=config.years.from; i--){ %>
+                            <option value="<%- i %>"><%- i %></option>
+                        <% } %>
+                    </select>
+                    <l>)</l>
+                    <div class="checkbox-current">
+                        <input type="checkbox" id="checkboxExp4" name="isCurrent" />
+                        <label for="checkbox">Currently studying?</label>
+                    </div>
+                    <input type="text" style="width:100% ; margin:0px 0px 0px 0px; border:white ; -webkit-appearance:none" placeholder="Enter Degree Title" id="degree" name="degree" />
+                    <ul name="valuePoints[]" class="showlistEdu" >
+                    <% for(i=1; i<10; i++){ %>
+                            <li><input type="text" name="valuePoints" class="valuePoints form-input-common" placeholder="Bullet point <%- i %>" /></li>
+                        <% } %>
+                    </ul>
+                    <button id="addbutton1" class="btn btn-link" style="display:inline;padding:0;"><i class="fa fa-floppy-o"></i> save </button> &nbsp; &nbsp; &nbsp;
+                    <a id="hideEduForm"><i class="fa fa-times-circle"></i> cancel</a>    <br>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End of row     -->

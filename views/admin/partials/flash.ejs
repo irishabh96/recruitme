@@ -1,0 +1,28 @@
+<div class="container">
+    <% if(messages.errors){ %>
+        <div style="margin-bottom:0px" class="alert alert-danger fade in">
+          <button type="button" data-dismiss="alert" class="close"><i class="fa fa-times-circle-o"></i></button>
+            <% messages.errors.forEach(function(error){ %>
+                <div class="alert-message-form"><%- error.msg %></div>
+            <% }) %>
+        </div>
+    <% } %>
+
+    <% if(messages.info){ %>
+        <div style="margin-bottom:0px" class="alert alert-info fade in">
+          <button type="button" data-dismiss="alert" class="close"><i class="fa fa-times-circle-o"></i></button>
+            <% messages.info.forEach(function(i){ %>
+              <div class="alert-message-form"><%- i.msg %></div>
+            <% }) %>
+            </div>
+    <% } %>
+
+    <% if(messages.success){ %>
+        <div style="margin-bottom:0px" class="alert alert-success fade in">
+          <button type="button" data-dismiss="alert" class="close"><i class="fa fa-times-circle-o"></i></button>
+            <% messages.success.forEach(function(i){ %>
+              <div class="alert-message-form"><%- i.msg %></div>
+            <% }) %>
+        </div>
+    <% } %>
+</div>

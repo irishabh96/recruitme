@@ -1,0 +1,234 @@
+<!-- sidebar -->
+
+<div class="list-group">
+    <form action="/preference" id="prefForm" method="post">
+        <input type="hidden" name="_csrf" value="<%- _csrf %>">
+
+<!-- EXPERIENCE -->
+        <a class="list-group-item no-padding">
+            <strong class="block text-white primary-color" style="padding: 15px;">EXPERIENCE</strong>
+        </a>
+        
+        <a class="list-group-item no-padding">
+            <select id="insightList1" name="industry" multiple="multiple" class="arrow-down"> 
+                <% config.industry.forEach(function(item, index){ %>
+                    <option <% if(_.contains(data.preferences.industry, item)){ %> selected="selected" <% } %> value="<%-item%>">
+                        <%- item %>
+                    </option>
+                <% }) %>
+            </select>
+        </a>
+        
+            <!-- multidropdown functionality-->
+            <script id="example" language="javascript">
+                $('#insightList1').multiselect({
+                    buttonWidth: '100%',
+                    enableClickableOptGroups: true,
+                    buttonClass: '',
+                    templates: {
+                        button: '<span data-toggle="dropdown" class="hand dropdown-toggle list-group-item" style="border:white; margin-top:-20px;">Industry<i class="fa fa-angle-down fa-pull-right primary-col"></i></span>'                    
+                    }
+                });
+            </script>
+            
+        <a class="list-group-item no-padding">
+            <select id="insightList2" name="functions" multiple="multiple" class="arrow-down">
+                <% config.functions.forEach(function(item, index){ %>
+                    <option <% if(_.contains(data.preferences.functions, item)){ %> selected="selected" <% } %> value="<%- item%>">
+                        <%- item %>
+                    </option>
+               <% }) %>
+            </select>
+        </a>
+            
+            <script id="example" language="javascript">
+                $('#insightList2').multiselect({
+                    buttonWidth: '100%',
+                    enableClickableOptGroups: true,
+                    buttonClass: '',
+                    templates: {
+                        button: '<span data-toggle="dropdown" class="hand dropdown-toggle list-group-item" style="border:white;">Functions<i class="fa fa-angle-down fa-pull-right primary-col"></i></span>'
+                    }
+                });
+            </script>
+
+        <a class="list-group-item no-padding">
+            <select name="experience" class="list-group-item arrow-down" style="border:white; width:100%; margin-top:-20px;">
+                <option value="">Experience </option>
+                <option <% if(data.preferences.experience == -1){ %> selected="selected" <% } %> value="-1">
+                    Experience: Less 1 yr
+                </option>
+                <option <% if(data.preferences.experience == 1){ %> selected="selected" <% } %> value="1">
+                    Experience: 1 year
+                </option>
+                <% for(i=2; i<20; i++){ %>
+                    <option <% if(data.preferences.experience == i){ %> selected="selected" <% } %> value="<%- i %>">
+                        Experience: <%- i %> years
+                    </option>
+                <% } %>
+                <option <% if(data.preferences.experience == 20){ %> selected="selected" <% } %> value="20">
+                    Experience: 20+ years
+                </option>
+            </select>
+        </a>
+        
+        <a class="list-group-item no-padding">
+            <select name="managementExperience" class="list-group-item arrow-down"  style="width:100%; border:white;">
+                <option value="">Management Experience</option>
+                <option <% if(data.preferences.managementExperience == -1){ %> selected="selected" <% } %> value="-1">
+                    Management Experience: Less 1 yr
+                </option>
+                <option <% if(data.preferences.managementExperience == 1){ %> selected="selected" <% } %> value="1">
+                    Management Experience: 1 year
+                </option>
+                <% for(i=2; i<20; i++){ %>
+                    <option <% if(data.preferences.managementExperience == i){ %> selected="selected" <% } %> value="<%- i %>">
+                        Management Experience: <%- i %> years
+                    </option>
+                <% } %>
+                <option <% if(data.preferences.managementExperience == 20){ %> selected="selected" <% } %> value="20">
+                    Management Experience: 20+ years
+                </option>
+            </select>
+        </a>
+
+<!-- PREFERENCES -->
+        <a class="list-group-item no-padding">
+            <strong class="block text-white primary-color" style="padding: 15px; margin:0px;">PREFERENCES</strong><br />
+        </a>
+        
+        <a class="list-group-item no-padding">    
+            <% if(data.preferences.location == ""){ %>                      
+                <span id="loc" class="multiselect hand dropdown-toggle list-group-item"  style="padding: 10px 15px 10px; -webkit-appearance:none; border:white; margin-top:-20px;">Location <i class="fa fa-angle-down fa-pull-right primary-col"></i></span>                      
+            <% } else { %>                      
+                <% if(data.preferences.location.length == 1){ %>                      
+                    <span id="loc" class="multiselect hand dropdown-toggle list-group-item" style="padding: 10px 15px 10px; -webkit-appearance:none; border:white; margin-top:-20px;">Location: <%- data.preferences.location %><i class="fa fa-angle-down fa-pull-right primary-col"></i></span>                      
+                <% } else { %>                      
+                    <span id="loc" class="multiselect hand dropdown-toggle list-group-item" style="padding: 10px 15px 10px; -webkit-appearance:none; border:white; margin-top:-20px">Location: <%- data.preferences.location.length %> selected<i class="fa fa-angle-down fa-pull-right primary-col"></i></span>                      
+                <% } %>                      
+            <% } %> 
+        </a>
+        
+        <script id="example" language="javascript">
+            $("#loc").click(e => {
+                window.location.href = "/preferences/location";
+            });
+        </script>
+                
+    <a class="list-group-item no-padding">    
+        <select id="insightList4" name="typeOfEmp" multiple="multiple" class="arrow-down">
+           <% config.typeOfEmp.forEach(function(item,index){ %>
+               <option <% if(_.contains(data.preferences.typeOfEmp, item)){ %> selected="selected" <% } %> value="<%- item%>">
+                   <%- item %>
+               </option>
+            <% }) %>
+        </select>
+    </a>
+    
+        <!-- multidropdown functionality-->
+        <script id="example" language="javascript">
+        $('#insightList4').multiselect({
+            buttonWidth: '100%',
+            enableClickableOptGroups: true,
+            buttonClass: '',
+            templates: {
+                button: '<span data-toggle="dropdown" class="hand dropdown-toggle list-group-item" style="border:white;">Employeement<i class="fa fa-angle-down fa-pull-right primary-col"></i></span>'                                        
+            }
+        });
+        </script>
+
+    <a class="list-group-item no-padding">
+        <select id="insightList5" name="typeOfJob" multiple="multiple" class="arrow-down">
+            <% config.typeOfJob.forEach(function(item,index){ %>
+                <option <% if(_.contains(data.preferences.typeOfJob, item)){ %> selected="selected" <% } %> value="<%- item%>">
+                    <%- item %>
+                </option>
+             <% }) %>
+        </select>
+    </a>
+    
+        <!-- multidropdown functionality-->
+        <script id="example" language="javascript">
+        $('#insightList5').multiselect({
+            buttonWidth: '100%',
+            enableClickableOptGroups: true,
+            buttonClass: '',
+            templates: {
+                button: '<span data-toggle="dropdown" class="hand dropdown-toggle list-group-item" style="border:white;">Role<i class="fa fa-angle-down fa-pull-right primary-col"></i></span>'                                        
+            }
+        });
+        </script>
+
+    <a class="list-group-item no-padding">
+        <select id="insightList6" name="companySize" multiple="multiple" class="arrow-down">
+                 <% config.companySize.forEach(function(item,index){ %>
+                     <option <% if(_.contains(data.preferences.companySize, item)){ %> selected="selected" <% } %> value="<%- item%>">
+                         <%- item %>
+                     </option>
+                <% }) %>
+        </select>
+    </a>
+    
+        <!-- multidropdown functionality-->
+        <script id="example" language="javascript">
+        $('#insightList6').multiselect({
+            buttonWidth: '100%',
+            enableClickableOptGroups: true,
+            buttonClass: '',
+            templates: {
+               button: '<span data-toggle="dropdown" class="hand dropdown-toggle list-group-item" style="border:white;">Company Size<i class="fa fa-angle-down fa-pull-right primary-col"></i></span>'                                        
+           }
+        });
+        </script>
+
+<!-- STATUS -->
+    <a class="list-group-item no-padding">
+        <strong class="block hand primary-color text-white" style="padding: 15px;">STATUS</strong>
+    </a>
+    
+    <a class="list-group-item no-padding">    
+        <select name="authorization" class="list-group-item arrow-down" style="width:100%; border:white;">
+            <option value="">Work Authorization</option>
+            <% config.authorization.forEach(function(item,index){ %>
+                <option <% if(data.preferences.authorization == item){ %> selected="selected" <% } %> value="<%- item %>">Work Authorization: 
+                    <%- item %>
+                </option>
+            <% }) %>
+        </select>
+    </a>
+    
+     <a class="list-group-item no-padding">
+        <select name="jobSeekingStatus" class="list-group-item arrow-down" style="width:100%; border:white;">
+            <option value="">Job Seeking Status</option>
+            <% config.jobSeekingStatus.forEach(function(item,index){ %>
+                <option <% if(data.preferences.jobSeekingStatus == item){ %> selected="selected" <% } %> value="<%- item %>">Job Seeking Status: 
+                    <%- item %>
+                </option>
+            <% }) %>
+        </select>
+    </a>
+
+<!-- COMPENSATION -->
+    <a class="list-group-item no-padding" >
+        <strong class="block hand primary-color text-white" style="padding: 15px;">COMPENSATION</strong>
+        <div id="wage" class="list-group-item" style="width:100% ;border:white;-webkit-appearance:none; padding: 15px" >
+
+            Minimum: $
+            <input <% if(data.preferences.compensation && data.preferences.compensation.salaryAmount){ %> value="<%- data.preferences.compensation.salaryAmount %>" <% } %>
+                style="width:75px;margin:-10px 0px 10px 0px;border:white;-webkit-appearance:none;border-bottom:thin solid #bdbcbc;"
+                name="salaryAmount" placeholder="0.00"/> &nbsp; &nbsp;
+            
+            <input style="vertical-align:middle;" type="radio" <% if(data.preferences.compensation && data.preferences.compensation.salaryType && data.preferences.compensation.salaryType == "perhour"){ %> checked="checked" <% } %> name="salaryType" value="perhour" style="margin:0px 0px 0px 0px">
+                 <label for="HTML" style="vertical-align:middle; margin:0px 0px 0px 0px">   /hr &nbsp; &nbsp;</label>
+
+            <input style="vertical-align:middle;" type="radio" <% if(data.preferences.compensation && data.preferences.compensation.salaryType && data.preferences.compensation.salaryType == "annual"){ %> checked="checked" <% } %> name="salaryType" value="annual" style="margin:0px 0px 0px 0px">
+                <label for="HTML" style="vertical-align:middle; margin:0px 0px 0px 0px">  annual</label>
+        </div>
+    </a>
+    
+        <script>
+                $("select, #wage input").on("change", function (e) {
+                    $("#prefForm").submit();
+                });
+            </script>
+</form>

@@ -1,0 +1,15 @@
+<strong>Select a job:</strong>
+<div class="list-group">
+<a class="list-group-item">
+<select id="select1" name="jobKey" onchange="getJobData(this.value)" class="list-group-item" style="width:210px ; margin:-10px -15px -10px -15px; border:white ; -webkit-appearance:none ; white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space:-o-pre-wrap;word-wrap:break-word">
+            <option value="">Select Job</option>
+            <% if( jobData ){ %>
+            <% jobData.forEach(function(item, index){ %>
+                <option <% if(typeof selectedJob !== 'undefined' && _.contains([selectedJob], item)){ %> selected="selected" <% } %> value="<%- item._id %>">
+                    <%- item.jobTitle %>
+                </option>
+            <% }) %>
+           <% } %>
+        </select>
+        </a>
+</div>

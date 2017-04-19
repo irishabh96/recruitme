@@ -1,0 +1,13 @@
+<%- contentFor('content') %>
+<% console.log(status) %>
+<div class="container">
+  <div class="page-header" style="text-align:center;">
+    <h3> Add / Edit Job</h3></div>
+        <form id="formAddEdit" action="/profile/jobs/add" method="post">
+                <label  for="jobName">Job Title:</label>
+                <input class="form-control" type="text" id="jobTitle" name="jobTitle" ><br>
+                <label  for="jobDescription">Job Description:</label>
+                <textarea class="form-control" id="jobDescription" name="jobDescription"></textarea><br>
+                <input type="hidden" name="_csrf" value="<%- _csrf %>">
+                <input type="hidden" name="userId" value="<%- profiledata._id %>">
+</div>

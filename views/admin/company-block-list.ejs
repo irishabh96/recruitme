@@ -1,0 +1,31 @@
+<%- contentFor('content') %>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="page-header" style="text-align:center;"><h3>Company Block List</h3></div>
+            <form action="/profile/company/block" method="POST" class="form-horizontal" href="/profile">
+                <input type="hidden" name="_csrf" value="<%- _csrf %>">
+                <div class="form-group" style="text-align:center;">
+                    <div align="center">List email extension of companies to block from search results. For example, if your email at a company was firstname.lastname@companyabc.com, then enter @companyabc.com below.</div><br/><br/>
+                    <div align="center">Company Email Extensions<br>(i.e. @companyabc.com):</div><br/>
+                    <% for(i=0; i < 9; i++){ %>
+                        <div align="center"><%-i%>. <input name="blockList" <% if(blockList[i]){ %> value="<%- blockList[i] %>" <% } %> > </input></div>
+                    <% } %>
+                    
+                    <!-- <div align="center">2. <input name="blockList" ></input></div>
+                    <div align="center">3. <input name="blockList" ></input></div>
+                    <div align="center">4. <input name="blockList" ></input></div>
+                    <div align="center">5. <input name="blockList" ></input></div>
+                    <div align="center">6. <input name="blockList" ></input></div>
+                    <div align="center">7. <input name="blockList" ></input></div>
+                    <div align="center">8. <input name="blockList" ></input></div>
+                    <div align="center">9. <input name="blockList" ></input></div><br> -->
+                    <br>
+                    <button type="submit" class="btn btn-lg btn-success btn-block" style="width:210px; margin:0 auto; " href="/profile" >Save</button> 
+                   <a href="/profile" class="btn btn-button" style="text-align:center;">Cancel</a>                                    
+                </form>
+        </div>
+    </div>
+</div>
+</div>

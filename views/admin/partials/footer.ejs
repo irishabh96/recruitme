@@ -1,0 +1,98 @@
+
+<div class="container">
+    <footer>
+        <div class="row">
+           <div class="col-lg-12">
+           <hr>
+                 <p align="left" style="width:50%;float:left" >Copyright &copy; Recruit Me 2017</p>
+                 <p align="right" style="width:50%;float:right" >Contact us: support@recruitme.co </p>                  
+           </div>
+        </div>
+    </footer>
+</div>
+
+<script src="/js/jquery-3.1.1.min.js" type="text/javascript"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/js/bootstrap-multiselect.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.3.3/jstree.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+<script src="/js/45e03a14ce.js"></script>
+<script src="/js/main.js"></script>
+
+
+<!-- Script to Activate the Carousel -->
+<script>
+$('.carousel').carousel({
+    interval: 5000 //changes the speed
+})
+</script>
+
+
+<script>
+     $(function(){
+        $("#prefForm").submit(function(event){
+            event.preventDefault();
+            $.ajax({
+                    url:'/preference',
+                    type:'POST',
+                    data:$(this).serialize(),
+                    success:function(result){
+                            console.log("success saved");
+                    }
+            });
+        });
+    });
+
+    $(".search-input").keyup(function() {
+        var searchString = $(this).val();
+        $('#jstree').show();
+        $('#jstree').jstree('search', searchString);
+    });
+
+
+    $(function(){
+        $('#jstree')
+        .bind('before.jstree', function(e, data) {
+
+        })
+        .bind('changed.jstree', function(e, data) {
+
+            var selectedLocationsArr = [];
+            var selectedLocations = $('#jstree').jstree("get_selected", true);
+            $.each(selectedLocations, function() {
+                if(this.data.jstree && this.data.jstree.value){
+                    selectedLocationsArr.push(this.data.jstree.value);
+                }
+            });
+            var output = [];
+            if (selectedLocationsArr.length === 0) {
+                output.push('<option selected="selected" value=""> </option>');
+            }
+            $.each(selectedLocationsArr, function(key, value){
+                output.push('<option selected="selected" value="'+ value +'">'+ value +'</option>');
+            });
+            $('#locationSelect').html(output.join(''));
+
+        })
+        .bind('loaded.jstree', function(e, data) {
+            setTimeout(function(){
+                $('.pre-container').hide();
+                $('#jstree').show();
+                $('#jstree').jstree("close_all");
+            },100)
+        })
+        .jstree({
+            "plugins" : ["checkbox", "search"],
+            "search": {
+                "case_insensitive": true,
+                "show_only_matches" : true
+            },
+            "core": {
+                "themes":{
+                    "icons":false
+                }
+            }
+        });
+
+    });
+</script>

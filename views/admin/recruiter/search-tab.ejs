@@ -1,0 +1,19 @@
+<%- contentFor('content') %>
+
+<% include recruiter-nav %>
+
+
+<div class="row"><br>
+
+
+<!-- Sidebar Column -->
+<div class="col-md-3">
+<% include ../select-job %><br>
+<% include recruiter-sidebar %>
+
+<!-- page main content -->
+<!-- <% if(typeof selectedJob == 'undefined'){ %>
+    <h3> Please select a job
+<% } %> -->
+
+ <% include search-data %>

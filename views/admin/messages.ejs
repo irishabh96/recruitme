@@ -1,0 +1,137 @@
+<% if(conversations.length > 0){ %>
+    <div class="chat_container">
+        <div class="col-sm-3 chat_sidebar">
+            <div class="row">
+                <!-- sidebar starts -->
+                <div class="member_list">
+                   <ul class="list-unstyled">
+                      <% conversations.forEach(function(conversation){ %>
+                          <li class="left clearfix" data-conversation-id="<%- conversation[0].conversationId %>">
+                             <span class="chat-img pull-left">
+                             <img src="/img/default-profile-picture.jpg" alt="User Avatar" class="img-circle">
+                             </span>
+                             <div class="chat-body clearfix">
+                                <div class="header_sec">
+                                   <strong class="primary-font" style="font-weight: 500;"><%- conversation[0].participantName %></strong>
+                                   <strong class="pull-right time-stamp"><%- helpers.agoTime(conversation[0].createdAt) %></strong>
+                                </div>
+                                <div class="contact_sec">
+                                   <strong class="primary-font" style="font-weight: 500;"><%- conversation[0].body %></strong>
+                                </div>
+                             </div>
+                          </li>
+                      <% }) %>
+                   </ul>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="col-sm-9 message_section">
+        <div class="row">
+
+        <div class="chat_area">
+        <ul class="list-unstyled">
+
+
+
+        </ul>
+        </div><!--chat_area-->
+           <div class="message_write">
+               <textarea class="form-control" id="messageField" placeholder="type a message"></textarea>
+               <div class="clearfix"></div>
+        <div class="chat_bottom">
+          <a href="#" class="pull-right btn btn-success" id="sendButton">Send</a>
+         </div>
+        </div>
+        </div>
+         </div> <!--message_section-->
+        </div>
+
+<% } else { %>
+
+    <h3><%- message %></h3>
+
+<% } %>
+
+
+<script>
+
+var cnf = {
+    conversationId : ''
+};
+
+$(document).on("ready", function(){
+
+    $('.member_list li').on('click', function(e){
+        cnf.conversationId = $(this).data('conversation-id');
+        var clickedClass = 'member_list_hover';
+        var alreadySelected = $(this).hasClass(clickedClass);
+        $('.member_list li').removeClass(clickedClass);
+        $(this).addClass(clickedClass);
+        requestNewMessages();
+        setInterval(function(){
+            requestNewMessages();
+        }, 2500);
+    });
+
+    function requestNewMessages(){
+        var settings = {
+                  "async": true,
+                  "crossDomain": true,
+                  "url": "<% config.url %>/profile/messages/conversation/"+cnf.conversationId,
+                  "method": "GET",
+                  "headers": {
+                    "content-type": "application/x-www-form-urlencoded",
+                    "cache-control": "no-cache",
+                  },
+            }
+        $.ajax(settings).done(function (response) {
+            $(".chat_area").html(response);
+            scrollTop();
+        });
+    }
+
+    $("#messageField").keyup(function(e) {
+        if (e.keyCode != 13) return;
+        var msg = $("#messageField").val().replace(/\n/g, "");
+        if(e.keyCode == 13 && msg) {
+            sendMessage(msg);
+        }
+    });
+    $("#sendButton").on('click', function(){
+        sendMessage($("#messageField").val());
+    });
+
+    function scrollTop(){
+        var chatarea = $(".chat_area");
+        chatarea.scrollTop(chatarea.prop("scrollHeight"));
+    }
+
+    function sendMessage(message){
+        $("#messageField").val('');
+        var settings = {
+                  "async": true,
+                  "crossDomain": true,
+                  "url": "<% config.url %>/profile/messages/"+cnf.conversationId,
+                  "method": "POST",
+                  "headers": {
+                    "content-type": "application/x-www-form-urlencoded",
+                    "cache-control": "no-cache",
+                  },
+                  "data": {
+                    "composedMessage": message,
+                    "_csrf": "<%- _csrf %>"
+                  }
+            }
+
+        $.ajax(settings).done(function (response) {
+          requestNewMessages();
+          scrollTop();
+        });
+    }
+
+
+});
+</script>

@@ -1,0 +1,28 @@
+<div class="container"><br><br>
+    <!-- Folder Tabs -->
+
+<div class="row">
+        <div class="col-lg-12">
+
+            <ul id="tabs" class="nav nav-tabs tabtop" style="border-bottom: 10px solid #EFEFEF;">
+                <li <% if(pageName == "Profile"){ %> class="active" <% } %>>
+                    <a href="/profile" >
+                    <i class="fa fa-user"></i> Jobs</a>
+                </li>
+
+                <li <% if(pageName == "Search Candidate"){ %> class="active" <% } %> >
+                    <a <% if(typeof data !== 'undefined' ){ %> href="/profile/search/<%- data._id %>" <% } else { %> href="/profile/search/" <% } %> >
+                    <i class="fa fa-search"></i> Search</a>
+                </li>
+                <li <% if(pageName == "Saved Candidate"){ %> class="active" <% } %> >
+                    <a <% if(typeof data !== 'undefined' ){ %> href="/profile/saved/<%- data._id %>" <% } else{ %> href="/profile/saved" <% } %> >
+                    <i class="fa fa-save"></i> Saved Profiles</a>
+                </li>
+                <li <% if(pageName == "Messages"){ %> class="active" <% } %> >
+                    <a <% if(typeof data !== 'undefined'){ %> href="/profile/messages/<%- data._id %>" <% } else{ %> href="/profile/messages" <% } %> >
+                    <i class="fa fa-inbox"></i> Messages</a>
+                </li>
+            </ul>
+
+        </div>
+    </div>

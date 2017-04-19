@@ -1,0 +1,15 @@
+<%- contentFor('content') %>
+<% console.log(status) %>
+<div class="container">
+    <div class="page-header" style="text-align:center;"><h3><% if(status == 'false'){ %> Activate Account <% } else { %> Deactivate Account <% } %></h3></div>
+    <form <% if(status == 'false'){ %>  action="/account/activate"  <% } else { %> action="/account/delete" <% } %> method="POST" class="form-horizontal">
+        <div class="form-group" style="text-align:center;">
+            <p class="col-sm-offset-2 col-sm-8"><%- message %></p>
+            <input type="hidden" name="_csrf" value="<%- _csrf %>">
+            <div class="col-sm-offset-2 col-sm-8">
+                <button type="submit" <% if(status == 'false'){ %>  class="btn btn-success"  >Yes, Activate Now <% } else{  %> class="btn btn-danger"  ><i class="fa fa-trash" style="position: relative;left: -2px;top: -1px;"></i>Yes, Deactivate Now <% } %> </button><br />
+                <a <% if(status == 'false'){ %>  href="/"  <% } else { %> href="/profile" <% } %> class="btn btn-button">Cancel</a>
+            </div>
+        </div>
+    </form>
+</div>

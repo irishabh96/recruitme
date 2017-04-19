@@ -1,0 +1,154 @@
+<div class="list-group">
+
+<div id="divHide">
+    <form id="recAction" <% if(typeof selectedJob!== 'undefined' ){ %> action="/preference/recruiter/<%- selectedJob._id %>" <% } %> method="post">
+    <input type="hidden" name="_csrf" value="<%- _csrf %>">
+<a class="list-group-item">
+    <select class="list-group-item" style="width:210px ; margin:-10px -15px -10px -15px; border:white ; -webkit-appearance:none"  name="industry">
+        <option value="">Industry</option>   
+        <% config.industry.forEach(function(item, index){ %>
+            <option <% if(typeof selectedJob!=='undefined'   && _.contains(selectedJob.preferences.industry, item)){ %> selected="selected" <% } %> value="<%- item%>">
+                Industry: <%- item %>
+            </option>
+        <% }) %>
+    </select>
+</a>
+
+<a  class="list-group-item">
+    <select class="list-group-item" style="width:210px ; margin:-10px -15px -10px -15px; border:white ; -webkit-appearance:none ; white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space:-o-pre-wrap;word-wrap:break-word"   name="functions">
+        <option value="">Function</option>
+        <% config.functions.forEach(function(item, index){ %>
+            <option <% if(typeof selectedJob!=='undefined'   && _.contains(selectedJob.preferences.functions, item)){ %> selected="selected" <% } %> value="<%- item%>">
+                Function: <%- item %>
+            </option>
+       <% }) %>   
+    </select>
+</a>
+
+<a class="list-group-item">
+    <select class="list-group-item" style="width:210px ; margin:-10px -15px -10px -15px ; border:white ; -webkit-appearance:none"  name="experience">
+        <option value="">Experience</option>
+
+        <option <% if(typeof selectedJob !== 'undefined'    && selectedJob.preferences.experience == -1){ %> selected="selected" <% } %> value="-1">
+            Experience: Less 1 yr
+        </option>
+
+        <option <% if(typeof selectedJob !== 'undefined'    && selectedJob.preferences.experience == 1){ %> selected="selected" <% } %> value="1">
+            <strong>Experience:</strong> 1 year
+        </option>
+
+        <% for(i=2; i<20; i++){ %>
+            <option <% if(typeof selectedJob !== 'undefined'    && selectedJob.preferences.experience == i){ %> selected="selected" <% } %> value="<%- i %>">
+                Experience: <%- i %> years
+            </option>
+        <% } %>
+
+        <option <% if(typeof selectedJob !== 'undefined'    && selectedJob.preferences.experience == 20){ %> selected="selected" <% } %> value="20">
+            Experience: 20+ years
+        </option>
+
+    </select>
+</a>
+<a class="list-group-item">
+    <select class="list-group-item" style="width:210px ; margin:-10px -15px -10px -15px ; border:white ; -webkit-appearance:none"  name="managementExperience">
+        <option value="">Management Experience</option>
+
+        <option <% if(typeof selectedJob !== 'undefined'    && selectedJob.preferences.managementExperience == -1){ %> selected="selected" <% } %> value="-1">
+            Management Experience: Less 1 yr
+        </option>
+
+        <option <% if(typeof selectedJob !== 'undefined'    && selectedJob.preferences.managementExperience == 1){ %> selected="selected" <% } %> value="1">
+            Management Experience: 1 year
+        </option>
+
+        <% for(i=2; i<20; i++){ %>
+            <option <% if(typeof selectedJob !== 'undefined'    && selectedJob.preferences.managementExperience == i){ %> selected="selected" <% } %> value="<%- i %>">
+                Management Experience: <%- i %> years
+            </option>
+        <% } %>
+
+        <option <% if(typeof selectedJob !== 'undefined'    && selectedJob.preferences.managementExperience == 20){ %> selected="selected" <% } %> value="20">
+            Management Experience: 20+ years
+        </option>
+    </select>
+</a>
+
+<a class="list-group-item">
+    <select class="list-group-item" style="width:210px ; margin:-10px -15px -10px -15px ; border:white ; -webkit-appearance:none; white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space:-o-pre-wrap;word-wrap:break-word"  name="location" >
+        <option value="">Location of Work</option>
+            <% Object.keys(config.states).forEach(function(item1, index){ %>
+                <% config.states[item1].forEach(function(item2){ %>
+                <option <% if(typeof selectedJob !== 'undefined'    &&  _.contains(selectedJob.preferences.location, item2)){ %> selected="selected" <% } %> value="<%- item1 + '-' + item2 %>" <>
+                Location: <%- item1 + '-' + item2 %>
+                </option>
+                 <% }) %>
+          <% }) %>
+    </select>
+</a>
+
+
+<a class="list-group-item">
+    <select class="list-group-item" style="width:210px ; margin:-10px -15px -10px -15px; border:white ; -webkit-appearance:none; white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space:-o-pre-wrap;word-wrap:break-word"   name="typeOfEmp">
+        <option value="">Employment Type</option>
+        <% config.typeOfEmp.forEach(function(item,index){ %>
+           <option <% if(typeof selectedJob !== 'undefined'    &&  _.contains(selectedJob.preferences.typeOfEmp, item)){ %> selected="selected" <% } %> value="<%- item%>">
+               Employeement Type: <%- item %>
+           </option>
+        <% }) %>
+    </select>
+    </a>
+    
+    <a class="list-group-item">
+        <select class="list-group-item" style="width:210px ; margin:-10px -15px -10px -15px; border:white ; -webkit-appearance:none; white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space:-o-pre-wrap;word-wrap:break-word"   name="typeOfJob">
+            <option value="">Role Type</option>
+            <% config.typeOfJob.forEach(function(item,index){ %>
+            <option <% if(typeof selectedJob !== 'undefined'    && _.contains(selectedJob.preferences.typeOfJob, item)){ %> selected="selected" <% } %> value="<%- item%>">
+                Role: <%- item %>
+            </option>
+            <% }) %>
+        </select>
+        </a>
+        
+        <a class="list-group-item">
+            <select class="list-group-item" style="width:210px ; margin:-10px -15px -10px -15px; border:white ; -webkit-appearance:none; white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space:-o-pre-wrap;word-wrap:break-word"   name="companySize">
+                <option value="">Company Size</option>
+                <% config.companySize.forEach(function(item,index){ %>
+                    <option <% if(typeof selectedJob !== 'undefined'    && _.contains(selectedJob.preferences.companySize, item)){ %> selected="selected" <% } %> value="<%- item %>" >
+                    Company Size: <%- item %>
+                    </option>
+                <% }) %>
+            </select>
+            </a>
+        
+        <a class="list-group-item">
+                <select class="list-group-item" style="width:210px ; margin:-10px -15px -10px -15px; border:white ; -webkit-appearance:none; white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space:-o-pre-wrap;word-wrap:break-word"   name="jobSeekingStatus">
+                    <option value="">Job Seeking Status</option>
+                    <% config.jobSeekingStatus.forEach(function(item,index){ %>
+                        <option <% if(typeof selectedJob !== 'undefined'    && selectedJob.preferences.jobSeekingStatus == item){ %> selected="selected" <% } %> value="<%- item %>" >
+                        Joob Seeking Status: <%- item %>
+                    </option>
+                    <% }) %>
+                </select>
+            </a>
+            
+            <a class="list-group-item">Maximum Compensation:<br>$
+            <input <% if(typeof selectedJob !== 'undefined'  && selectedJob.preferences.compensation && selectedJob.preferences.compensation.salaryAmount){ %> value="<%- selectedJob.preferences.compensation.salaryAmount %>" <% } %> name="salaryAmount" style="width:auto ;  margin:-10px 0px 10px 0px; border:white ; -webkit-appearance:none"></input>
+                <br>
+                <input type="radio"  <% if(typeof selectedJob !== 'undefined'    && selectedJob.preferences.compensation && selectedJob.preferences.compensation.salaryType && selectedJob.preferences.compensation.salaryType == "perhour"){ %> checked="checked" <% } %>  name="salaryType" value="perhour">
+                <label for="HTML"> &nbsp  per hour &nbsp &nbsp &nbsp     </label>
+                <input type="radio" <% if(typeof selectedJob !== 'undefined'    &&  selectedJob.preferences.compensation && selectedJob.preferences.compensation.salaryType && selectedJob.preferences.compensation.salaryType == "annual"){ %> checked="checked" <% } %>   name="salaryType" value="annual">
+                <label for="HTML"> &nbsp  annual</label>
+            </a>
+            <a class="list-group-item">
+                <select class="list-group-item" name="lastActive" style="width:210px ; margin:-10px -15px -10px -15px; border:white ; -webkit-appearance:none"  >
+                    <option value="" >Last Active</option>
+                    <% config.lastActive.forEach(function(item){ %>
+                        <option value="<%- item %>"><%-item/24 %> Days</option>
+                    <% }) %>
+                </select>
+            </a>
+            <button type="submit" class="btn btn-lg btn-success btn-block">Search</button>
+            </form>
+            </div>
+        </div> 
+    </div>

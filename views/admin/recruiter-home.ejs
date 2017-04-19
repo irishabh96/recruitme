@@ -1,0 +1,129 @@
+<%- contentFor('content') %>
+<% include recruiter/recruiter-nav %>
+
+
+<!-- Modal -->
+
+<br>
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Add New Job</h4>
+      </div><br>
+      <div class="modal-body"><br>
+            <form id="formAddEdit" action="/profile/jobs/add" method="post">
+
+                <label  for="jobName">Job Title:</label>
+                <input class="form-control" type="text" id="jobTitle" name="jobTitle" ><br>
+                <label  for="jobDescription">Job Description:</label>
+                <textarea class="form-control" id="jobDescription" name="jobDescription"></textarea><br>
+                <input type="hidden" name="_csrf" value="<%- _csrf %>">
+                <input type="hidden" name="userId" value="<%- profiledata._id %>">
+
+
+      </div>
+      <div class="modal-footer">
+        <button type="submit" id="btnAddEdit" class="btn btn-primary">Add New Job</button>
+        </form>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- jobs content -->
+
+
+    <% if(jobData.length > 0 ) {%>
+    <button style="margin-bottom:20px" type="button" class="btn btn-info btn-md" style="align: center" data-toggle="modal" data-target="#myModal">
+     Add Job
+    </button>
+       <table class="table table-inverse">
+            <thead >
+                <tr>
+                    <th>Job Title</th>
+                    <th>Job Description</th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody class="table-striped">
+                <% for(var i=0; i < jobData.length; i++){ %>
+                    <tr>
+                        <td><%-jobData[i].jobTitle %></td>
+                        <td><%-jobData[i].jobDescription %></td>
+                        <td >
+                            <a class="editJob" value="<%- jobData[i]._id%>">
+                            <i class="fa fa-pencil-square " aria-hidden="true"></i> edit</a>
+                        </td>
+                        <td >
+                            <a class="editJob" value="<%- jobData[i]._id%>">
+                            <i class="fa fa-align-jusify " aria-hidden="true"></i> post</a>
+                        </td>
+                        <td>
+                            <a href="/profile/jobs/deactivate/<%-jobData[i]._id %>">
+                            <i class="fa fa-times-circle-o" aria-hidden="true"></i> close</a>
+                        </td>
+                    </tr>
+                <% } %>
+            </tbody>
+        </table>
+
+    <% } else{ %>
+
+           <!-- <h3> No Jobs Found! Please Add</h3> -->
+            <button type="button" class="btn btn-info btn-md" style="align: center" data-toggle="modal" data-target="#myModal">
+             Add Job
+            </button>
+
+        <% }  %>
+
+
+<!-- closed Jobs-->
+<!-- <div>
+    <% if(closedJobs.length > 0){ %>
+    <hr>
+    <h2 align="center">Closed Jobs</h2>
+    <table class="table table-inverse">
+            <thead >
+                <tr>
+                    <th>Job Title</th>
+                    <th>Job Description</th>
+                    <th>Open Job</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody class="table-striped">
+                <% for(var i=0; i < closedJobs.length; i++){ %>
+                    <tr>
+                        <td><%-closedJobs[i].jobTitle %></td>
+                        <td><%-closedJobs[i].jobDescription %></td>
+                        <td>
+                            <a href="/profile/jobs/activate/<%- closedJobs[i]._id %>">
+                                <i class="fa fa-times-circle-o" aria-hidden="true"></i>
+
+                            </a>
+                        </td>
+                        <td>
+
+                            <a href="/profile/jobs/delete/<%-closedJobs[i]._id %>">
+                            <i class="fa fa-trash-o" aria-hidden="true"></i></a>
+                        </td>
+                    </tr>
+                <% } %>
+            </tbody>
+        </table>
+        <% } else{%>
+        <hr>
+            <h3 align="center">Closed Jobs</h3>
+            <h4 align="center">You have not closed any Jobs</h4>
+        <% } %>
+</div> -->
+
+
+</div>
+

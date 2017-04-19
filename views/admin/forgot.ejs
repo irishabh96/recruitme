@@ -1,0 +1,32 @@
+<%- contentFor('content') %>
+<!-- Page Content -->
+<div class="container">
+        <div class="row">
+            <div class="col-sm-8 col-sm-offset-2" style="margin-top:100px;">
+                <form method="POST">
+                  <legend>Forgot Password</legend>
+                  <input type="hidden" name="_csrf" value="<%- _csrf %>">
+                  <div class="form-group">
+                    <p>Enter your email address below and we will send you password reset instructions.</p>
+                    <label for="email" class="control-label">Email</label>
+                    <input type="email" name="email" id="email" placeholder="Email" autofocus required class="form-control">
+                  </div>
+                  <div class="form-group">
+                    <button type="submit" class="btn btn-primary"><i class="fa fa-key"></i>Reset Password</button>
+                  </div>
+                </form>
+              </div>
+
+<!-- display message on click-->
+            <!-- <script language="javascript">
+            function toggle() {
+                var ele = document.getElementById("toggleText");
+                var text = document.getElementById("displayText");
+                if(ele.style.display == "none") {
+                    ele.style.display = "block";
+                }
+            }
+            </script> -->
+
+</div>
+<!-- /.container -->
