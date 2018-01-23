@@ -21,9 +21,8 @@ const sass = require('node-sass-middleware');
 const multer = require('multer');
 const expressLayouts = require('express-ejs-layouts');
 const moment = require('moment');
-const _ = require("underscore");
-const helpers = require("./helpers/helpers");
-
+const _ = require('underscore');
+const helpers = require('./helpers/helpers');
 
 const upload = multer({ dest: path.join(__dirname, 'uploads') });
 
@@ -32,12 +31,10 @@ const upload = multer({ dest: path.join(__dirname, 'uploads') });
  */
 dotenv.load({ path: '.env' });
 
-
 /**
  * Load main app config.
  */
 const config = require('./config/main');
-
 
 /**
  * Controllers (route handlers).
@@ -70,7 +67,6 @@ app.locals._ = _;
 app.locals.helpers = helpers;
 app.locals.config = config;
 
-
 /**
  * Connect to MongoDB.
  */
@@ -79,8 +75,8 @@ app.locals.config = config;
 mongoose.Promise = global.Promise;
 mongoose.connect(process.env.MONGODB_URI || process.env.MONGOLAB_URI);
 mongoose.connection.on('error', () => {
-  console.log('%s MongoDB connection error. Please make sure MongoDB is running.', chalk.red('✗'));
-  process.exit();
+	console.log('%s MongoDB connection error. Please make sure MongoDB is running.', chalk.red('✗'));
+	process.exit();
 });
 
 /**
@@ -92,90 +88,103 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 app.use(expressLayouts);
 
-
 app.use(expressStatusMonitor());
 app.use(compression());
-app.use(sass({
-  src: path.join(__dirname, 'public'),
-  dest: path.join(__dirname, 'public')
-}));
+app.use(
+	sass({
+		src: path.join(__dirname, 'public'),
+		dest: path.join(__dirname, 'public')
+	})
+);
 app.use(logger('dev'));
-app.use(bodyParser.json({
-        extended: false,
-     parameterLimit: 10000,
-     limit: 1024 * 1024 * 10
-}));
-app.use(bodyParser.urlencoded({
-        extended: false,
-     parameterLimit: 10000,
-     limit: 1024 * 1024 * 10
-}));
+app.use(
+	bodyParser.json({
+		extended: false,
+		parameterLimit: 10000,
+		limit: 1024 * 1024 * 10
+	})
+);
+app.use(
+	bodyParser.urlencoded({
+		extended: false,
+		parameterLimit: 10000,
+		limit: 1024 * 1024 * 10
+	})
+);
 
-//app.use(expressValidator());
-app.use(expressValidator({
- customValidators: {
-    accountTypeCheck: function(value) {
-        if(value == 'recruiter'){
-            return 1;
-        }else if(value == 'candidate'){
-            return 1;
-        }
-        else{
-            return 0;
-        }
-    },
-    gte: function(param1, param2) {
-        return param1 >= param2;
-    },
-    isNonCorporate: function(email, type){
-        if(type == 'recruiter'){
-            const provider = email.match(/@[\w.]+/i)[0];
-            if(provider == '@gmail.com' || provider == '@yahoo.com' || provider == '@hotmail.com' || provider == '@outlook.com'){
-                return 0;
-            }
-        }
-        return 1;
-    }
-}
-}));
-app.use(session({
-  resave: true,
-  saveUninitialized: true,
-  secret: process.env.SESSION_SECRET,
-  store: new MongoStore({
-    url: process.env.MONGODB_URI || process.env.MONGOLAB_URI,
-    autoReconnect: true
-  })
-}));
+app.use(
+	expressValidator({
+		customValidators: {
+			accountTypeCheck: function(value) {
+				if (value == 'recruiter') {
+					return 1;
+				} else if (value == 'candidate') {
+					return 1;
+				} else {
+					return 0;
+				}
+			},
+			gte: function(param1, param2) {
+				return param1 >= param2;
+			},
+			isNonCorporate: function(email, type) {
+				if (type == 'recruiter') {
+					const provider = email.match(/@[\w.]+/i)[0];
+					if (
+						provider == '@gmail.com' ||
+						provider == '@yahoo.com' ||
+						provider == '@hotmail.com' ||
+						provider == '@outlook.com'
+					) {
+						return 0;
+					}
+				}
+				return 1;
+			}
+		}
+	})
+);
+app.use(
+	session({
+		resave: true,
+		saveUninitialized: true,
+		secret: process.env.SESSION_SECRET,
+		store: new MongoStore({
+			url: process.env.MONGODB_URI || process.env.MONGOLAB_URI,
+			autoReconnect: true
+		})
+	})
+);
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
 app.use((req, res, next) => {
-  if (req.path === '/profile/api/upload') {
-    next();
-  } else {
-    lusca.csrf()(req, res, next);
-  }
+	if (req.path === '/profile/api/upload') {
+		next();
+	} else {
+		lusca.csrf()(req, res, next);
+	}
 });
 app.use(lusca.xframe('SAMEORIGIN'));
 app.use(lusca.xssProtection(true));
 app.use((req, res, next) => {
-  res.locals.user = req.user;
-  next();
+	res.locals.user = req.user;
+	next();
 });
 app.use((req, res, next) => {
-  // After successful login, redirect back to the intended page
-  if (!req.user &&
-      req.path !== '/login' &&
-      req.path !== '/signup' &&
-      !req.path.match(/^\/auth/) &&
-      !req.path.match(/\./)) {
-    req.session.returnTo = req.path;
-  } else if (req.user &&
-      req.path == '/account') {
-    req.session.returnTo = req.path;
-  }
-  next();
+	// After successful login, redirect back to the intended page
+	if (
+		!req.user &&
+		req.path !== '/login' &&
+		req.path !== '/signup' &&
+		!req.path.match(/^\/auth/) &&
+		!req.path.match(/\./)
+	) {
+		req.session.returnTo = req.path;
+	} else if (req.user && req.path == '/account') {
+		req.session.returnTo = req.path;
+	}
+	next();
 });
 app.use(express.static(path.join(__dirname, 'public'), { maxAge: 31557600000 }));
 
@@ -210,7 +219,6 @@ app.use('/profile/messages', messagesController);
 //   res.redirect(req.session.returnTo || '/');
 // });
 
-
 /**
  * Error Handler.
  */
@@ -220,8 +228,9 @@ app.use(errorHandler());
  * Start Express server.
  */
 app.listen(app.get('port'), () => {
-  console.log('%s App is running at http://localhost:%d in %s mode', chalk.green('✓'), app.get('port'), app.get('env')); 
-  console.log('  Press CTRL-C to stop\n');
+	console.log('%s App is running at http://localhost:%d in %s mode', chalk.green('✓'), app.get('port'), app.get('env'));
+
+	console.log('  Press CTRL-C to stop\n');
 });
 
 module.exports = app;
